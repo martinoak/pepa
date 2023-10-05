@@ -18,7 +18,7 @@
     <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
 </head>
 <body>
-<aside class="uk-display-inline-block uk-float-left" style="margin: 0 20px; width: 10%">
+<aside class="uk-display-inline-block uk-float-left uk-box-shadow-xlarge" style="padding: 20px 20px 0; width: 10%; background-color: #ddd; height: 100vh">
     <h3 class="uk-text-bold">VMix handler</h3>
     <ul class="uk-nav uk-nav-default">
         <li class="uk-active"><a href="#">Active</a></li>
@@ -29,23 +29,29 @@
                 <li><a href="#">Sub item</a></li>
             </ul>
         </li>
-        <li class="uk-nav-header">Header</li>
-        <li><a href="#"><span class="uk-margin-small-right" uk-icon="icon: table"></span> Item</a></li>
-        <li><a href="#"><span class="uk-margin-small-right" uk-icon="icon: thumbnails"></span> Item</a></li>
-        <li><a href="#"><span class="uk-margin-small-right" uk-icon="icon: trash"></span> Item</a></li>
     </ul>
 </aside>
-<div class="uk-container uk-container-expand uk-margin-top">
+<div class="uk-container uk-container-expand" style="padding-top: 20px">
     <div id="app">
         <ul uk-tab>
             <li class="uk-active"><a href="#">Karta</a></li>
             <li><a href="#">Tabulka</a></li>
             <li><a href="#">Pavouk</a></li>
         </ul>
-        <label for="boxCount">Number of Boxes:</label>
-        <input v-model="boxCount" type="number" id="boxCount" min="1" @input="generateBoxes">
+        <div class="uk-flex" style="align-items: center">
+            <label for="boxCount" class="uk-margin-right">Počet:</label>
+            <button type="button" class="uk-icon-button uk-margin-small-right" uk-icon="minus" v-on:click="boxCount--"></button>
+            <input v-model="boxCount" type="number" class="uk-input uk-input-small uk-margin-small-right" id="boxCount" min="1" @input="generateBoxes()" style="width: 5%">
+            <button type="button" class="uk-icon-button uk-margin-large-right" uk-icon="plus" v-on:click="boxCount++"></button>
 
-        <ul class="uk-grid-small uk-child-width-1-2 uk-child-width-1-4@s" uk-sortable="handle: .uk-card" uk-grid>
+            <label for="boxWidth" class="uk-margin-right">Šířka:</label>
+            <button type="button" class="uk-icon-button uk-margin-small-right" uk-icon="minus" v-on:click="boxWidth--"></button>
+            <input v-model="boxWidth" type="number" class="uk-input uk-input-small uk-margin-small-right" id="boxWidth" min="1" style="width: 5%" readonly>
+            <button type="button" class="uk-icon-button uk-margin-large-right" uk-icon="plus" v-if="boxWidth < 6" v-on:click="boxWidth++"></button>
+            <button type="button" class="uk-icon-button uk-margin-large-right" uk-icon="plus" v-else hidden></button>
+        </div>
+
+        <ul class="uk-grid-small" :class="'uk-child-width-1-'+boxWidth" uk-sortable="handle: .uk-card" uk-grid>
             <li v-for="(box, index) in boxes" :key="index">
                 <div class="uk-card uk-card-small uk-card-default uk-card-body uk-text-center uk-box-shadow-hover-large">
                     <form>
@@ -94,10 +100,12 @@
             el: '#app',
             data: {
                 boxCount: 1,
+                boxWidth: 1,
                 boxes: [{ inputValue: '', placeholder: 'Enter text', newInputValue: '', newPlaceholder: 'New text' }]
             },
             methods: {
                 generateBoxes() {
+                    console.log('sadsda');
                     this.boxes = Array.from({ length: parseInt(this.boxCount) }, () => ({
                         inputValue: '',
                         placeholder: 'Enter text',
