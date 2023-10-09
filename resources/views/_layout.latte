@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="{str_replace('_', '-', app()->getLocale())}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Laravel</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
+    <link rel="shortcut icon" href="{asset('favicon.ico')}">
+
+    <link rel="stylesheet" href="{asset('css/uikit.css')}?m={filemtime(public_path('css/uikit.css'))}">
+    <link rel="stylesheet" href="{asset('css/style.css')}?m={filemtime(public_path('css/style.css'))}">
+    <script src="{asset('js/uikit.js')}?m={filemtime(public_path('js/uikit.js'))}"></script>
+    <script src="{asset('js/uikit-icons.js')}?m={filemtime(public_path('js/uikit-icons.js'))}"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+    {block head}{/block}
+</head>
+<body>
+<aside class="uk-display-inline-block uk-float-left uk-box-shadow-xlarge" style="padding: 20px 20px 0; width: 10%; background-color: #ddd; height: calc(100vh - 20px);">
+    <h3 class="uk-text-bold">VMix handler</h3>
+    <ul class="uk-nav uk-nav-default">
+        <li class="uk-active"><a href="#">Active</a></li>
+        <li class="uk-parent">
+            <a href="#">Parent</a>
+            <ul class="uk-nav-sub">
+                <li><a href="#">Sub item</a></li>
+                <li><a href="#">Sub item</a></li>
+            </ul>
+        </li>
+    </ul>
+</aside>
+{include content}
+
+{block scripts}{/block}
+</body>
+</html>

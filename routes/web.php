@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers;
 
 /*
 |--------------------------------------------------------------------------
@@ -12,5 +13,8 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Route::any('/card', [Controllers\CardsController::class, 'index'])->name('card');
+Route::any('/table', [Controllers\TableController::class, 'index'])->name('table');
+Route::any('/spider', [Controllers\SpiderController::class, 'index'])->name('spider');
 
-Route::any('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::any('/submit', [Controllers\OutputController::class, 'submit'])->name('submit');

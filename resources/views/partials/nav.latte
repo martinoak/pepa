@@ -1,0 +1,12 @@
+<ul uk-tab>
+    <li {if url()->current() === route('card')}class="uk-active"{/if} onclick="window.location.href='/card'">
+        <a href="{route('card')}">Karta</a>
+    </li>
+    <li {if url()->current() === route('table')}class="uk-active"{/if} onclick="window.location.href='/table'">
+        <a href="{route('table')}">Tabulka</a>
+    </li>
+    <li {if url()->current() === route('spider')}class="uk-active"{/if} onclick="window.location.href='/spider'">
+        <a href="{route('spider')}">Pavouk</a>
+    </li>
+
+</ul>

@@ -1,0 +1,91 @@
+{layout '_layout.latte'}
+
+{block content}
+<div class="uk-container uk-container-expand" style="padding-top: 20px">
+    <div id="app">
+        {include 'partials/nav.latte'}
+        <div class="uk-flex uk-flex-middle">
+            <label for="boxCount" class="uk-margin-right">Počet:</label>
+            <button type="button" class="uk-icon-button uk-margin-small-right" uk-icon="minus" v-if="boxCount > 1" v-on:click="boxCount-- && generateBoxes()"></button>
+            <button type="button" class="uk-icon-button uk-margin-small-right" uk-icon="minus" v-else disabled style="background: transparent; color: transparent"></button>
+            <input v-model="boxCount" type="number" class="uk-input uk-input-small uk-margin-small-right" id="boxCount" min="1" @input="generateBoxes()" style="width: 5%">
+            <button type="button" class="uk-icon-button uk-margin-large-right" uk-icon="plus" v-on:click="boxCount++ && generateBoxes()"></button>
+
+            <label for="boxWidth" class="uk-margin-right">Šířka:</label>
+            <button type="button" class="uk-icon-button uk-margin-small-right" uk-icon="minus" v-if="boxWidth > 1" v-on:click="boxWidth--"></button>
+            <button type="button" class="uk-icon-button uk-margin-small-right" uk-icon="minus" v-else disabled style="background: transparent; color: transparent"></button>
+            <input v-model="boxWidth" type="number" class="uk-input uk-input-small uk-margin-small-right" id="boxWidth" min="1" style="width: 5%" readonly>
+            <button type="button" class="uk-icon-button uk-margin-large-right" uk-icon="plus" v-if="boxWidth < 6" v-on:click="boxWidth++"></button>
+            <button type="button" class="uk-icon-button uk-margin-large-right" uk-icon="plus" v-else hidden></button>
+        </div>
+        <form method="post" action="{route('submit')}">
+            <ul class="uk-grid-small" :class="'uk-child-width-1-'+boxWidth" uk-sortable="handle: .uk-card" uk-grid>
+                <li v-for="(box, index) in boxes" :key="index">
+                    <div class="uk-card uk-card-small uk-card-default uk-card-body uk-text-center uk-box-shadow-hover-large">
+                        {csrf_field()|noescape}
+                        <fieldset class="uk-fieldset">
+                            <div class="uk-margin-small-bottom uk-flex uk-flex-column" :id="'appender-'+index">
+                                <div class="uk-flex">
+                                    <input class="uk-input uk-margin-right uk-margin-small-bottom" type="text" :name="'box-'+index+'-input-0'" v-model="box.inputValue" :placeholder="box.placeholder" aria-label="Input">
+                                    <button uk-toggle="target: #modal-id-field-id" type="button" uk-icon="pencil"></button>
+                                </div>
+                            </div>
+
+                            <div class="uk-inline">
+                                <button type="button" class="uk-margin-small-right uk-icon-button" style="background-color: #39f; color: white" v-on:click="appendText(index)" uk-icon="file-text"></button>
+                                <button type="button" class="uk-margin-small-right uk-icon-button" style="background-color: #39f; color: white" v-on:click="appendNumber(index)" uk-icon="tag"></button>
+                                <button type="button" class="uk-margin-small-right uk-icon-button" style="background-color: #39f; color: white" v-on:click="appendCheckbox(index)" uk-icon="check"></button>
+                                <button type="button" class="uk-margin-small-right uk-icon-button" style="background-color: #39f; color: white" v-on:click="appendImage(index)" uk-icon="image"></button>
+                            </div>
+                        </fieldset>
+                    </div>
+                </li>
+            </ul>
+            <button type="submit" class="uk-button uk-button-primary uk-margin-large-top uk-float-right">Generate</button>
+        </form>
+    </div>
+</div>
+{/block}
+
+{block scripts}
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                boxCount: 1,
+                boxWidth: 1,
+                index: 0,
+                counter: 1,
+                boxes: [{ inputValue: '', placeholder: 'Text', newInputValue: '', newPlaceholder: 'New text' }]
+            },
+            methods: {
+                generateBoxes() {
+                    this.boxes = Array.from({ length: parseInt(this.boxCount) }, () => ({
+                        inputValue: '',
+                        placeholder: 'Text',
+                        newInputValue: '',
+                        newPlaceholder: 'New text'
+                    }));
+                    this.counter = 1;
+                    this.index++;
+                },
+                appendText(id) {
+                    document.getElementById("appender-"+id).innerHTML += '<div class="uk-flex"><input class="uk-input uk-margin-right uk-margin-small-bottom" type="text" name="box-'+this.index+'-input-'+this.counter+'" placeholder="Text" aria-label="Input"><button uk-toggle="target: #modal-id-field-id" type="button" uk-icon="pencil"></button></div>';
+                    this.counter++;
+                },
+                appendNumber(id) {
+                    document.getElementById("appender-"+id).innerHTML += '<div class="uk-flex"><input class="uk-input uk-margin-right uk-margin-small-bottom" type="number" placeholder="Number" aria-label="Input"><button uk-toggle="target: #modal-id-field-id" type="button" uk-icon="pencil"></button></div>';
+                },
+                appendCheckbox(id) {
+                    document.getElementById("appender-"+id).innerHTML += '<div class="uk-flex uk-flex-between uk-margin-small-bottom"><label><input class="uk-checkbox" type="checkbox" checked> Checkbox</label><button uk-toggle="target: #modal-id-field-id" type="button" uk-icon="icon: pencil; ratio: 0.85"></button></div>';
+                },
+                appendImage(id) {
+                    document.getElementById("appender-"+id).innerHTML += '<div class="uk-flex" uk-form-custom="target: true"><input type="file" aria-label="Custom controls"><input class="uk-input uk-margin-small-bottom uk-margin-right" type="text" placeholder="Select file" aria-label="Custom controls" disabled><button uk-toggle="target: #modal-id-field-id" type="button" uk-icon="pencil"></button></div>';
+                },
+                duplicateFields() {
+                    let data = document.getElementById("appender").innerHTML;
+                }
+            }
+        });
+    </script>
+{/block}
