@@ -8,13 +8,13 @@
             <label for="boxCount" class="uk-margin-right">Počet:</label>
             <button type="button" class="uk-icon-button uk-margin-small-right" uk-icon="minus" v-if="boxCount > 1" v-on:click="boxCount-- && generateBoxes()"></button>
             <button type="button" class="uk-icon-button uk-margin-small-right" uk-icon="minus" v-else disabled style="background: transparent; color: transparent"></button>
-            <input v-model="boxCount" type="number" class="uk-input uk-input-small uk-margin-small-right" id="boxCount" min="1" @input="generateBoxes()" style="width: 5%">
+            <input v-model="boxCount" type="number" class="uk-input uk-input-small uk-margin-small-right" min="1" @input="generateBoxes()" style="width: 5%" readonly>
             <button type="button" class="uk-icon-button uk-margin-large-right" uk-icon="plus" v-on:click="boxCount++ && generateBoxes()"></button>
 
             <label for="boxWidth" class="uk-margin-right">Šířka:</label>
             <button type="button" class="uk-icon-button uk-margin-small-right" uk-icon="minus" v-if="boxWidth > 1" v-on:click="boxWidth--"></button>
             <button type="button" class="uk-icon-button uk-margin-small-right" uk-icon="minus" v-else disabled style="background: transparent; color: transparent"></button>
-            <input v-model="boxWidth" type="number" class="uk-input uk-input-small uk-margin-small-right" id="boxWidth" min="1" style="width: 5%" readonly>
+            <input v-model="boxWidth" type="number" class="uk-input uk-input-small uk-margin-small-right" min="1" style="width: 5%" readonly>
             <button type="button" class="uk-icon-button uk-margin-large-right" uk-icon="plus" v-if="boxWidth < 6" v-on:click="boxWidth++"></button>
             <button type="button" class="uk-icon-button uk-margin-large-right" uk-icon="plus" v-else hidden></button>
         </div>
@@ -25,10 +25,7 @@
                         {csrf_field()|noescape}
                         <fieldset class="uk-fieldset">
                             <div class="uk-margin-small-bottom uk-flex uk-flex-column" :id="'appender-'+index">
-                                <div class="uk-flex">
-                                    <input class="uk-input uk-margin-right uk-margin-small-bottom" type="text" :name="'box-'+index+'-input-0'" v-model="box.inputValue" :placeholder="box.placeholder" aria-label="Input">
-                                    <button uk-toggle="target: #modal-id-field-id" type="button" uk-icon="pencil"></button>
-                                </div>
+                                {* inputs *}
                             </div>
 
                             <div class="uk-inline">
@@ -74,16 +71,16 @@
                     this.counter++;
                 },
                 appendNumber(id) {
-                    document.getElementById("appender-"+id).innerHTML += '<div class="uk-flex"><input class="uk-input uk-margin-right uk-margin-small-bottom" type="number" placeholder="Number" aria-label="Input"><button uk-toggle="target: #modal-id-field-id" type="button" uk-icon="pencil"></button></div>';
+                    document.getElementById("appender-"+id).innerHTML += '<div class="uk-flex"><input class="uk-input uk-margin-right uk-margin-small-bottom" type="number" name="box-'+this.index+'-input-'+this.counter+'" placeholder="Number" aria-label="Input"><button uk-toggle="target: #modal-id-field-id" type="button" uk-icon="pencil"></button></div>';
+                    this.counter++;
                 },
                 appendCheckbox(id) {
-                    document.getElementById("appender-"+id).innerHTML += '<div class="uk-flex uk-flex-between uk-margin-small-bottom"><label><input class="uk-checkbox" type="checkbox" checked> Checkbox</label><button uk-toggle="target: #modal-id-field-id" type="button" uk-icon="icon: pencil; ratio: 0.85"></button></div>';
+                    document.getElementById("appender-"+id).innerHTML += '<div class="uk-flex uk-flex-between uk-margin-small-bottom"><label><input type="hidden" value="off" name="box-'+this.index+'-input-'+this.counter+'"><input class="uk-checkbox" type="checkbox" name="box-'+this.index+'-input-'+this.counter+'" checked> Checkbox</label><button uk-toggle="target: #modal-id-field-id" type="button" uk-icon="icon: pencil; ratio: 0.85"></button></div>';
+                    this.counter++;
                 },
                 appendImage(id) {
-                    document.getElementById("appender-"+id).innerHTML += '<div class="uk-flex" uk-form-custom="target: true"><input type="file" aria-label="Custom controls"><input class="uk-input uk-margin-small-bottom uk-margin-right" type="text" placeholder="Select file" aria-label="Custom controls" disabled><button uk-toggle="target: #modal-id-field-id" type="button" uk-icon="pencil"></button></div>';
-                },
-                duplicateFields() {
-                    let data = document.getElementById("appender").innerHTML;
+                    document.getElementById("appender-"+id).innerHTML += '<div class="uk-flex" uk-form-custom="target: true"><input type="file" name="box-'+this.index+'-input-'+this.counter+'" aria-label="Custom controls"><input class="uk-input uk-margin-small-bottom uk-margin-right" type="text" placeholder="Select file" aria-label="Custom controls" disabled><button uk-toggle="target: #modal-id-field-id" type="button" uk-icon="pencil"></button></div>';
+                    this.counter++;
                 }
             }
         });
