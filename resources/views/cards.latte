@@ -18,7 +18,7 @@
             <button type="button" class="uk-icon-button uk-margin-large-right" uk-icon="plus" v-if="boxWidth < 6" v-on:click="boxWidth++"></button>
             <button type="button" class="uk-icon-button uk-margin-large-right" uk-icon="plus" v-else hidden></button>
         </div>
-        <form method="post" action="{route('submit')}">
+        <form method="post" action="{route('submit')}" class="uk-margin-top" enctype="multipart/form-data">
             <ul class="uk-grid-small" :class="'uk-child-width-1-'+boxWidth" uk-sortable="handle: .uk-card" uk-grid>
                 <li v-for="(box, index) in boxes" :key="index">
                     <div class="uk-card uk-card-small uk-card-default uk-card-body uk-text-center uk-box-shadow-hover-large">
@@ -67,19 +67,19 @@
                     this.index++;
                 },
                 appendText(id) {
-                    document.getElementById("appender-"+id).innerHTML += '<div class="uk-flex"><input class="uk-input uk-margin-right uk-margin-small-bottom" type="text" name="box-'+this.index+'-input-'+this.counter+'" placeholder="Text" aria-label="Input"><button uk-toggle="target: #modal-id-field-id" type="button" uk-icon="pencil"></button></div>';
+                    document.getElementById("appender-"+id).innerHTML += '<div class="uk-flex uk-flex-between uk-margin-small-bottom" style="align-items: center"><input class="uk-input uk-margin-small-right uk-width-expand" type="text" name="box-'+this.index+'-input-'+this.counter+'" placeholder="Text" aria-label=""><a href="#modal-example" class="uk-icon-link" uk-icon="icon: pencil; ratio: 1.2" style="color: #39f" uk-toggle></a></div>'+this.modal;
                     this.counter++;
                 },
                 appendNumber(id) {
-                    document.getElementById("appender-"+id).innerHTML += '<div class="uk-flex"><input class="uk-input uk-margin-right uk-margin-small-bottom" type="number" name="box-'+this.index+'-input-'+this.counter+'" placeholder="Number" aria-label="Input"><button uk-toggle="target: #modal-id-field-id" type="button" uk-icon="pencil"></button></div>';
+                    document.getElementById("appender-"+id).innerHTML += '<div class="uk-flex uk-flex-between uk-margin-small-bottom" style="align-items: center"><input class="uk-input uk-margin-small-right uk-width-expand" type="number" name="box-'+this.index+'-input-'+this.counter+'" placeholder="Number" aria-label=""><a href="#" class="uk-icon-link" uk-icon="icon: pencil; ratio: 1.2" style="color: #39f"></a></div>';
                     this.counter++;
                 },
                 appendCheckbox(id) {
-                    document.getElementById("appender-"+id).innerHTML += '<div class="uk-flex uk-flex-between uk-margin-small-bottom"><label><input type="hidden" value="off" name="box-'+this.index+'-input-'+this.counter+'"><input class="uk-checkbox" type="checkbox" name="box-'+this.index+'-input-'+this.counter+'" checked> Checkbox</label><button uk-toggle="target: #modal-id-field-id" type="button" uk-icon="icon: pencil; ratio: 0.85"></button></div>';
+                    document.getElementById("appender-"+id).innerHTML += '<div class="uk-flex uk-flex-between uk-margin-small-bottom" style="align-items: center"><input type="hidden" value="off" name="box-'+this.index+'-input-'+this.counter+'"><input class="uk-checkbox uk-margin-small-right" type="checkbox" name="box-'+this.index+'-input-'+this.counter+'" aria-label="Checkbox"><a href="#" class="uk-icon-link" uk-icon="icon: pencil; ratio: 1.2" style="color: #39f"></a></div>';
                     this.counter++;
                 },
                 appendImage(id) {
-                    document.getElementById("appender-"+id).innerHTML += '<div class="uk-flex" uk-form-custom="target: true"><input type="file" name="box-'+this.index+'-input-'+this.counter+'" aria-label="Custom controls"><input class="uk-input uk-margin-small-bottom uk-margin-right" type="text" placeholder="Select file" aria-label="Custom controls" disabled><button uk-toggle="target: #modal-id-field-id" type="button" uk-icon="pencil"></button></div>';
+                    document.getElementById("appender-"+id).innerHTML += '<div class="uk-flex uk-flex-between uk-margin-small-bottom" style="align-items: center" uk-form-custom="target: true"><input type="file" name="box-'+this.index+'-input-'+this.counter+'" aria-label=""><input class="uk-input uk-width-expand uk-margin-small-right" type="text" placeholder="Select file" aria-label="Custom controls" disabled><a href="#" class="uk-icon-link" uk-icon="icon: pencil; ratio: 1.2" style="color: #39f"></a></div>';
                     this.counter++;
                 }
             }

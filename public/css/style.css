@@ -1,4 +1,12 @@
 /*
+    Globální font
+*/
+
+body {
+    font-family: 'Roboto', sans-serif;
+}
+
+/*
     Schovat šipky u inputu typu number
 */
 
