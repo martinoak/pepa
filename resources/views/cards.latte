@@ -67,7 +67,7 @@
                     this.index++;
                 },
                 appendText(id) {
-                    document.getElementById("appender-"+id).innerHTML += '<div class="uk-flex uk-flex-between uk-margin-small-bottom" style="align-items: center"><input class="uk-input uk-margin-small-right uk-width-expand" type="text" name="box-'+this.index+'-input-'+this.counter+'" placeholder="Text" aria-label=""><a href="#modal-example" class="uk-icon-link" uk-icon="icon: pencil; ratio: 1.2" style="color: #39f" uk-toggle></a></div>'+this.modal;
+                    document.getElementById("appender-"+id).innerHTML += '<div class="uk-flex uk-flex-between uk-margin-small-bottom" style="align-items: center"><input class="uk-input uk-margin-small-right uk-width-expand" type="text" name="box-'+this.index+'-input-'+this.counter+'" placeholder="Text" aria-label=""><a uk-toggle="target: #modal-'+this.index+'-input-'+this.counter+'" class="uk-icon-link" uk-icon="icon: pencil; ratio: 1.2" style="color: #39f"></a></div><div id="modal-'+this.index+'-input-'+this.counter+'" uk-modal><div class="uk-modal-dialog uk-modal-body"><h2 class="uk-modal-title"></h2><button class="uk-modal-close" type="button"></button></div></div>';
                     this.counter++;
                 },
                 appendNumber(id) {
