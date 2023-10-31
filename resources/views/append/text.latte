@@ -1,0 +1,20 @@
+<div class="uk-flex uk-flex-between uk-margin-small-bottom" style="align-items: center">
+    <input  v-model="box-'+this.index+'-input-'+this.counter+'"
+            class="uk-input uk-margin-small-right uk-width-expand"
+            type="text"
+            :name="box-'+this.index+'-input-'+this.counter+'"
+            placeholder="Text"
+            aria-label="">
+    <a uk-toggle="target: #modal-'+this.index+'-input-'+this.counter+'"
+       class="uk-icon-link"
+       uk-icon="icon: pencil; ratio: 1.2"
+       style="color: #39f"></a>
+</div>
+<div id="modal-'+this.index+'-input-'+this.counter+'" uk-modal>
+    <div class="uk-modal-dialog uk-modal-body">
+        <input v-model="box-'+this.index+'-input-'+this.counter+'"
+               class="uk-input uk-margin-small-right uk-width-expand"
+               type="text"
+               aria-label="">
+    </div>
+</div>

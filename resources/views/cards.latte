@@ -8,7 +8,7 @@
             <label for="boxCount" class="uk-margin-right">Počet:</label>
             <button type="button" class="uk-icon-button uk-margin-small-right" uk-icon="minus" v-if="boxCount > 1" v-on:click="boxCount-- && generateBoxes()"></button>
             <button type="button" class="uk-icon-button uk-margin-small-right" uk-icon="minus" v-else disabled style="background: transparent; color: transparent"></button>
-            <input v-model="boxCount" type="number" class="uk-input uk-input-small uk-margin-small-right" min="1" @input="generateBoxes()" style="width: 5%" readonly>
+            <input v-model="boxCount" type="number" class="uk-input uk-input-small uk-margin-small-right" min="1" style="width: 5%" readonly>
             <button type="button" class="uk-icon-button uk-margin-large-right" uk-icon="plus" v-on:click="boxCount++ && generateBoxes()"></button>
 
             <label for="boxWidth" class="uk-margin-right">Šířka:</label>
@@ -45,7 +45,7 @@
 {/block}
 
 {block scripts}
-    <script>
+    <script n:syntax="off">
         new Vue({
             el: '#app',
             data: {
@@ -53,7 +53,8 @@
                 boxWidth: 1,
                 index: 0,
                 counter: 1,
-                boxes: [{ inputValue: '', placeholder: 'Text', newInputValue: '', newPlaceholder: 'New text' }]
+                boxes: [{ inputValue: '', placeholder: 'Text', newInputValue: '', newPlaceholder: 'New text' }],
+                box0input1: 'ahoj',
             },
             methods: {
                 generateBoxes() {
@@ -67,7 +68,7 @@
                     this.index++;
                 },
                 appendText(id) {
-                    document.getElementById("appender-"+id).innerHTML += '<div class="uk-flex uk-flex-between uk-margin-small-bottom" style="align-items: center"><input class="uk-input uk-margin-small-right uk-width-expand" type="text" name="box-'+this.index+'-input-'+this.counter+'" placeholder="Text" aria-label=""><a uk-toggle="target: #modal-'+this.index+'-input-'+this.counter+'" class="uk-icon-link" uk-icon="icon: pencil; ratio: 1.2" style="color: #39f"></a></div><div id="modal-'+this.index+'-input-'+this.counter+'" uk-modal><div class="uk-modal-dialog uk-modal-body"><h2 class="uk-modal-title"></h2><button class="uk-modal-close" type="button"></button></div></div>';
+                    document.getElementById("appender-"+id).innerHTML += '<div class="uk-flex uk-flex-between uk-margin-small-bottom" style="align-items: center"><input class="uk-input uk-margin-small-right uk-width-expand" type="text" @name="box'+this.index+'input'+this.counter+'" placeholder="Text" aria-label=""><a uk-toggle="target: #modal'+this.index+'input'+this.counter+'" class="uk-icon-link" uk-icon="icon: pencil; ratio: 1.2" style="color: #39f"></a></div><div id="modal'+this.index+'input'+this.counter+'" uk-modal><div class="uk-modal-dialog uk-modal-body"><input v-model="box'+this.index+'input'+this.counter+'" @input="box'+this.index+'input'+this.counter+'" class="uk-input uk-margin-small-right uk-width-expand"></div></div>';
                     this.counter++;
                 },
                 appendNumber(id) {
